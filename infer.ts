@@ -37,3 +37,26 @@ const result_2 = `example_string-here`.replace(/(_|-)/g, (matchedValue) => `${ma
 // This is the exact mental modal that you need in order to be able to understand and use infer
 
 // Infer lets you find something out about the thing that you are investigating, instantiate a variable and then reuse that variable however you want to.
+
+// Now if we would like to apply this to our previous example, we can do something like:
+type ReturnTypeSimplified_2 = typeof simpleFunction extends (...args: any) => infer R ? 1 : 0;
+// So here this R infers the return type from the thing that we checked
+
+// And if now return this infered type R like this:
+type ReturnTypeSimplified_3 = typeof simpleFunction extends (...args: any) => infer R ? R : 0;
+// And now, type of ReturnTypeSimplified_3 will be string because simpleFunction returns string and infer R catches that, and we return that infer R which is string.
+// If, simpleFunction would return number for example, then the type would be number for this example.
+
+// If the pattern is not matched we can return never, cause never is suitable here, meaning that
+// if the passed function or variable does not match the variable then what should we return?
+// If we return 0 it is false, if we return null it is also not correct, we should just return never,
+// Never in typescript is kind of throwing an erro, never is something like that should never ever be allowed
+// It does not give you a red error message or something but for example if you would use never in type union
+// something like:
+
+type TestingUnionWithNeverType = 'here some string' | never | 123123
+// if you check the type of TestingUnionWithNeverType you will see that it is either a 'here some string' or 123123 
+// Never removed from the equation kind of.
+
+// To put it another way, never is like a zero as a number, you know you have a zero of something,
+// Never is like you have no version of that type that can exist.
