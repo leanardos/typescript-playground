@@ -60,3 +60,12 @@ type TestingUnionWithNeverType = 'here some string' | never | 123123
 
 // To put it another way, never is like a zero as a number, you know you have a zero of something,
 // Never is like you have no version of that type that can exist.
+
+// So, if we update our type with never it would look like this.
+type ReturnTypeSimplified_4 = typeof simpleFunction extends (...args: any) => infer R ? R : never;
+// Now the type still be string here because simpleFunction matches (...args: any) => infer R 
+// but if we would put something like:
+
+const someArray = [];
+type ReturnTypeSimplified_5 = typeof someArray extends (...args: any) => infer R ? R : never;
+// Now the type will be never because [] does not match with (...args: any) => infer R
